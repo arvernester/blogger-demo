@@ -8,6 +8,8 @@
     <meta name="author" content="Colorlib" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
+    @stack('opengraph')
+
     <link rel="shortcut icon" href="{{ asset('images/favicon.png') }}" />
     <link href='http://fonts.googleapis.com/css?family=Montserrat:400,700%7CLibre+Baskerville:400,400italic,700' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" type="text/css"  href='{{ asset('css/clear.css') }}' />

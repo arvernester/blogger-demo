@@ -1,5 +1,11 @@
 @extends('layouts.blog')
 
+@push('opengraph')
+    <meta property="og:title" content="{{ $post['title'] }}" />
+    <meta property="og:description" content="{{ substr($description, 0, 160) }}" />
+    <meta property="og:url" content="{{ url()->current() }}">
+@endpush
+
 @section('content')
 <div id="content" class="site-content center-relative">
     <div class="single-post-wrapper content-1070 center-relative">

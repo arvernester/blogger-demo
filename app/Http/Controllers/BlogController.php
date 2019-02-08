@@ -42,7 +42,9 @@ class BlogController extends Controller
     }
 
     /**
+     * @param Request $request
      * @return View
+     * @throws \Illuminate\Validation\ValidationException
      */
     public function index(Request $request): View
     {
@@ -72,7 +74,11 @@ class BlogController extends Controller
             abort(404, __('Post not found.'));
         }
 
-        return view('blogs.show', compact('post'));
+        list($excerpt, $content) = explode('<br />', $post['content'], 2);
+        unset($content);
+
+        return view('blogs.show', compact('post'))
+            ->with('description', strip_tags($excerpt));
     }
 
     /**
