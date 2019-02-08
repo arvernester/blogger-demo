@@ -719,7 +719,7 @@ body.open .site-content
 .single-post article
 {
     margin: 0 auto;
-    text-align: justify;  
+    /*text-align: justify;  */
 }
 
 .single-post h1.entry-title
