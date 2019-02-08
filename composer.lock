@@ -3114,12 +3114,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/arvernester/blogger.git",
-                "reference": "8482fb619913459f74c8ddd669f3bb164638ab62"
+                "reference": "b669aab6ef0d61c203574f3342db6f4c49e416ce"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/arvernester/blogger/zipball/8482fb619913459f74c8ddd669f3bb164638ab62",
-                "reference": "8482fb619913459f74c8ddd669f3bb164638ab62",
+                "url": "https://api.github.com/repos/arvernester/blogger/zipball/b669aab6ef0d61c203574f3342db6f4c49e416ce",
+                "reference": "b669aab6ef0d61c203574f3342db6f4c49e416ce",
                 "shasum": ""
             },
             "require": {
@@ -3155,7 +3155,7 @@
                 }
             ],
             "description": "Blogger Rest API",
-            "time": "2019-02-08T07:04:28+00:00"
+            "time": "2019-02-08T17:44:01+00:00"
         },
         {
             "name": "zendframework/zend-diactoros",
