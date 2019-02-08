@@ -51,7 +51,7 @@
     </div>
 
     <div class="featured-image-holder">
-        <div class="featured-post-image" style="background-image: url({{ asset('demo-images/featured-image.jpg') }})"></div>
+        <div class="featured-post-image" style="background-image: url({{ asset('images/html.jpg') }})"></div>
 
     </div>
     <div class="clear"></div>
