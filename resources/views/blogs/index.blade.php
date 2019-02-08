@@ -30,8 +30,12 @@
                                     <a href="{{ route('blog.show', $post['id']) }}">{{ $post['title'] }}</a>
                                 </h2>
                                 @if ($index == 0)
+                                    @php
+                                        list($excerpt, $content) = explode('<br />', $post['content'], 2);
+                                    @endphp
+
                                     <div class="excerpt">
-                                        {{ $post['content'] }}
+                                        {{ strip_tags($excerpt) }}
                                     </div>
                                 @endif
                                 <div class="clear"></div>
