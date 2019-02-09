@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\View\View;
 use Yugo\Blogger\Facades\Blogger;
 
@@ -28,9 +29,18 @@ class BlogController extends Controller
      */
     private $linebkreak = '<br />';
 
+    /**
+     * @var Carbon
+     */
+    private $cacheDuration;
+
     public function __construct()
     {
-        $this->blog = Blogger::blog();
+        $this->cacheDuration = now()->addMinutes(5);
+
+        $this->blog = Cache::remember('blogger.blog', $this->cacheDuration, function (){
+            return Blogger::blog();
+        });
 
         if (empty($this->blog) or !empty($this->blog['error'])) {
             abort(404, __('Blog not found.'));
@@ -69,7 +79,9 @@ class BlogController extends Controller
      */
     private function getPages(): array
     {
-        return $this->blogger->pages();
+        return Cache::remember('blogger.page.all', $this->cacheDuration, function (){
+            return $this->blogger->pages();
+        });
     }
 
     /**
@@ -105,7 +117,9 @@ class BlogController extends Controller
      */
     public function show(string $id): View
     {
-        $post = $this->blogger->postById($id);
+        $post = Cache::remember('blogger.post.'.$id, $this->cacheDuration, function () use ($id){
+            return $this->blogger->postById($id);
+        });
 
         if (empty($post) or !empty($post['error'])) {
             abort(404, __('Post not found.'));
@@ -122,7 +136,9 @@ class BlogController extends Controller
      */
     public function page(string $id): View
     {
-        $page = $this->blogger->page($id);
+        $page = Cache::remember('blogger.page.'.$id, $this->cacheDuration, function () use ($id){
+            return $this->blogger->page($id);
+        });
 
         $page = $this->getExcerpt($page);
 
