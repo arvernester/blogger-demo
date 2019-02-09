@@ -13,9 +13,20 @@ class BlogController extends Controller
      */
     private $blog = [];
 
+    /**
+     * @var Blogger
+     */
     private $blogger;
 
+    /**
+     * @var array
+     */
     private $pages = [];
+
+    /**
+     * @var string
+     */
+    private $linebkreak = '<br />';
 
     public function __construct()
     {
@@ -31,6 +42,26 @@ class BlogController extends Controller
 
         \view()->share('blog', $this->blog);
         \view()->share('pages', $this->pages);
+    }
+
+    /**
+     * @param $post
+     * @return array
+     */
+    private function getExcerpt($post): array
+    {
+        if (str_contains($post['content'], $this->linebkreak)) {
+            list($excerpt,$content) = explode($this->linebkreak, $post['content'], 2);
+        }
+        elseif (str_contains($post['content'], '.')) {
+            list($excerpt, $content) = explode('.', $post['content'], 2);
+            $excerpt .= '.';
+        }
+        unset($content);
+
+        $post['excerpt'] = strip_tags($excerpt ?? $post['item']);
+
+        return $post;
     }
 
     /**
@@ -59,6 +90,12 @@ class BlogController extends Controller
             $posts = $this->blogger->posts();
         }
 
+        if (! empty($posts['items'])) {
+            $items = array_map([$this, 'getExcerpt'], $posts['items']);
+
+            $posts['items'] = $items;
+        }
+
         return view('blogs.index', compact('posts'));
     }
 
@@ -74,11 +111,9 @@ class BlogController extends Controller
             abort(404, __('Post not found.'));
         }
 
-        list($excerpt, $content) = explode('<br />', $post['content'], 2);
-        unset($content);
+        $post = $this->getExcerpt($post);
 
-        return view('blogs.show', compact('post'))
-            ->with('description', strip_tags($excerpt));
+        return view('blogs.show', compact('post'));
     }
 
     /**
@@ -88,6 +123,8 @@ class BlogController extends Controller
     public function page(string $id): View
     {
         $page = $this->blogger->page($id);
+
+        $page = $this->getExcerpt($page);
 
         return view('blogs.page', compact('page'));
     }

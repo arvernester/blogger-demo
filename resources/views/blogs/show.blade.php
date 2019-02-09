@@ -2,7 +2,7 @@
 
 @push('opengraph')
     <meta property="og:title" content="{{ $post['title'] }}" />
-    <meta property="og:description" content="{{ substr($description, 0, 160) }}" />
+    <meta property="og:description" content="{{ substr($post['excerpt'], 0, 160) }}" />
     <meta property="og:url" content="{{ url()->current() }}">
 @endpush
 
